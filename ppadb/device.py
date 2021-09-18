@@ -34,11 +34,16 @@ class Device(Transport, Serial, Input, Utils, WM, Traffic, CPUStat, BatteryStats
     INSTALL_RESULT_PATTERN = "(Success|Failure|Error)\s?(.*)"
     UNINSTALL_RESULT_PATTERN = "(Success|Failure.*|.*Unknown package:.*)"
 
-    def __init__(self, client, serial):
+    def __init__(self, client, serial, timeout=None):
         self.client = client
         self.serial = serial
+        self.timeout = timeout
 
     def create_connection(self, set_transport=True, timeout=None):
+        # Use the class attribute's default value if one is not specified
+        if timeout is None:
+            timeout = self.timeout
+            
         conn = self.client.create_connection(timeout=timeout)
 
         if set_transport:

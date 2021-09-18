@@ -37,8 +37,8 @@ class Transport(Command):
 
         return conn
 
-    def screencap(self):
-        conn = self.create_connection()
+    def screencap(self, timeout=None):
+        conn = self.create_connection(timeout=timeout)
 
         with conn:
             cmd = "shell:/system/bin/screencap -p"
